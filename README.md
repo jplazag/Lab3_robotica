@@ -15,10 +15,10 @@ Phantom X e impleméntelo en MATLAB. Se recomienda usar el toolbox para verifica
 Para mayor claridad del espacio de trabajo del robot Phantom X, este se presenta en dos planos, el XZ y el XY, es decir, una vista lateral y una superior respectivamente. 
 A continuación se muestra a izquierda el espacio de trabajo en el plano XZ y a derecha se presenta en el plano XY.
 
-<img src="https://i.postimg.cc/g2qHQbLr/Workspace1.png" alt="drawing" width="500"/>
+<img src="https://i.postimg.cc/g2qHQbLr/Workspace1.png" alt="drawing" width="400"/>
 
 
-<img src="https://i.postimg.cc/TPdJXNn0/Workspace2.png" alt="drawing" width="500"/>
+<img src="https://i.postimg.cc/TPdJXNn0/Workspace2.png" alt="drawing" width="400"/>
 
 Estos dibujos consideran las limitaciones articulares que presenta cada junta del robot, las cuales alcanzan valores de -150° a 150°.
 
