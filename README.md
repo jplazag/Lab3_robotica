@@ -14,6 +14,7 @@ Phantom X e impleméntelo en MATLAB. Se recomienda usar el toolbox para verifica
 **RESPUESTA:**
 Para mayor claridad del espacio de trabajo del robot Phantom X, este se presenta en dos planos, el XZ y el XY, es decir, una vista lateral y una superior respectivamente. 
 A continuación se muestra a izquierda el espacio de trabajo en el plano XZ y a derecha se presenta en el plano XY.
+
 <img src="https://i.postimg.cc/g2qHQbLr/Workspace1.png" alt="drawing" width="500"/>
 
 
