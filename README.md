@@ -76,6 +76,8 @@ end
 
 **RESPUESTA:**
 
+<img src="https://i.postimg.cc/TPdJXNn0/Workspace2.png" alt="drawing" width="400"/>
+
 - Consulte los métodos disponibles en el toolbox para determinar la cinemática inversa de un manipulador.
 
 **RESPUESTA:**
@@ -462,11 +464,15 @@ Otra observación respecto a la solución de este punto, está enfocada en la ca
 
 NOTA: Se debe aclarar que para el desarrollo de este punto se realizó un ligero cambio en la secuencia de la aplicación pick and place, el manipulador tomará la pieza 2 ubicada al lado derecho y la insertará en la pieza 1 ubicada al frente del robot, luego recogerá otra pieza 2 al lado izquierdo y de nuevo la insertará en la pieza 1 que se encuentra al frente. Este cambio se realizó debido a que las mordazas del manipulador no cierran en su totalidad, por lo que este no es capaz de agarrar la pieza 1 y trasladarla como se sugirió en el laboratorio. 
 
+[**PARA VER EL FUNCIONAMIENTO DE LA APLICACIÓN PICK AND PLACE HAGA CLICK AQUÍ :)**](https://youtu.be/nAaMzAQ5Slk)
+
 ***Aplicación de movimiento en el espacio de la tarea:***
 
 
 torques
 premultiplicacion
+
+[**PARA VER EL FUNCIONAMIENTO DE LA APLICACIÓN DE MOVIMIENTO EN EL ESPACIO DE TAREA HAGA CLICK AQUÍ :)**](https://youtu.be/nAaMzAQ5Slk)
 ## Conclusiones:
 
 - Al desarrollar la aplicación pick and place, notamos una situación singular. La estrategia de desenergizar, posicionar y volver a energizar, nos mostró las consecuencias de seleccionar un punto en el espacio fuera del espacio de trabajo del manipulador. Al posicionar en estas poses inalcanzables y volver a energizar, el robot tenía comportamientos extraños, se movía hacía lugares que no se le habían inidicado. Fue esta otra razón para no calcular las MTH de la herramienta con esta estrategia.
@@ -475,5 +481,8 @@ premultiplicacion
 
 - En el transcurso del desarrollo de esta práctica, nos dimos cuenta que era mandatorio que el manipulador fuera a una posición home apenas se iniciara a correr el código, de no hacerlo los cálculos hechos no correspondian a los movimientos que hacía el robot.
 
-- 
+- Para facilitar los cálculos en la cinemática inversa de las poses finales en la aplicación pick and place, fue necesario cambiar el origen del marco de referencia 0, ya que este se encontraba en la base del primer motor, pero ya que las piezas 1 y 2 iban a estar al nivel del suelo, se bajó este origen para que también quedara a este nivel.
+
 ## Referencias:
+- [rob_unal_clase6](https://github.com/fegonzalez7/rob_unal_clase6)
+- [guía de laboratorio](https://drive.google.com/file/d/1tYA0gQ9XO5WdSqxvGoNDuhaGTOsUNHZ_/view)
