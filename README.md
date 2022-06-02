@@ -13,6 +13,9 @@ Phantom X e impleméntelo en MATLAB. Se recomienda usar el toolbox para verifica
 
 **RESPUESTA:**
 
+<img src="https://i.postimg.cc/18XFVTHZ/Workspace1.png" alt="drawing" width="600"/>
+
+
 - Consulte los métodos disponibles en el toolbox para determinar la cinemática inversa de un manipulador.
 
 **RESPUESTA:**
