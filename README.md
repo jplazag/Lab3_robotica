@@ -16,7 +16,9 @@ function thetas = InverseKinematics(Robot,l,Pose)
  
     HT0 = Pose; %Robot.fkine(q);
 ```
+
 Se define entonces las variables x_p y y_p que son las distancias en los respectivos ejes del TCP, al calcular la arcotangente de estos dos valores es posible determinar q1, teniendo en cuenta el cuadrante en el que se encuentran para asignar el signo correspondiente:
+
 ```    
     d_T = HT0(1:3,4);
     approach = HT0(1:3,3);
@@ -33,9 +35,11 @@ Se define entonces las variables x_p y y_p que son las distancias en los respect
         th1_m = th1;
     end
     
-    ```   
+```   
+    
 Con los eslabones L2 y L3 se forma un primer triangulo, que al aplicar el teorema de los cosenos es posible despejar q3 y al aplicar una identidad es posible determinar los valores de esta articulación para las soluciones codo arriba y codo abajo:
-    ```   
+
+```   
     x_trian = sqrt( W(1)^2 + W(2)^2);
     y_trian = W(3) - l(1);
     
@@ -47,10 +51,11 @@ Con los eslabones L2 y L3 se forma un primer triangulo, que al aplicar el teorem
     
     th3_do = -th3_up; %Codo abajo
     
-    ```   
-  A partir del cálculo de q3, se pueden determinar los ángulos alpha y beta que al restarlos da q2 con codo abajo, al sumarlos da un q2 con codo arriba:
-    ```   
+```   
     
+  A partir del cálculo de q3, se pueden determinar los ángulos alpha y beta que al restarlos da q2 con codo abajo, al sumarlos da un q2 con codo arriba:
+  
+``` 
     alpha = atan2(-y_trian,x_trian); %Acá y se toma negativa puesto que el mvto de las juntas es contrario al sentido de la convención 
     beta= atan2(-l(3)*sin(abs(th3_do)),l(2)+l(3)*cos(abs(th3_do)));
     
@@ -62,7 +67,9 @@ Con los eslabones L2 y L3 se forma un primer triangulo, que al aplicar el teorem
     th2_up = (pi/2+th2_up);
     
 ```     
+
 Finalmente, al hacer la operación de multiplicar la inversa de la matriz de rotación de 3 con respecto a 0, con la matriz de rotación de la herramienta con respecto a la base, se obtendrá la matriz de la herramienta respecto al marco 3, esta matriz es posible extraer q4 al calcular la arcotangente de -HT3_up(1,1)/HT3_up(2,1):
+
 ``` 
     
     H30_do = Robot.A([1 2 3],[th1_m th2_do th3_do]);
