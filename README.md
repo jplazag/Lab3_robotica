@@ -95,11 +95,46 @@ end
 
 **RESPUESTA:**
 
-<img src="https://i.postimg.cc/TPdJXNn0/Workspace2.png" alt="drawing" width="400"/>
+Para mayor claridad del espacio de trabajo del robot Phantom X, este se presenta en dos planos, el XZ y el XY, es decir, una vista lateral y una superior respectivamente. 
+A continuación se muestra a izquierda el espacio de trabajo en el plano XZ y a derecha se presenta en el plano XY.
+
+<img src="https://i.postimg.cc/g2qHQbLr/Workspace1.png" alt="drawing" width="500"/> <img src="https://i.postimg.cc/TPdJXNn0/Workspace2.png" alt="drawing" width="500"/>
 
 - Consulte los métodos disponibles en el toolbox para determinar la cinemática inversa de un manipulador.
 
 **RESPUESTA:**
+
+Haciendo la respectiva consulta, se encontraron al menos 7 métodos que permiten hallar la cinemática inversa de un manipulador.
+
+- **ikine6s** 
+
+Cinemática inversa para robot de 6 ejes esféricos de muñeca revolucionados.
+
+- **ikine** 
+
+Cinemática inversa mediante método numérico iterativo.
+
+- **ikunc** 
+
+Cinemática inversa mediante optimización.
+
+- **ikcon** 
+
+Cinemática inversa mediante optimización con límites articulares.
+
+- **ikine_sym** 
+
+Cinemática inversa analítica obtenida simbólicamente.
+
+- **ikinem** 
+
+Cinemática inversa numérica por minimización.
+
+- **ikine3** 
+
+Cinemática inversa para robot de 3 ejes sin muñeca.
+
+
 
 ## Análisis:
 
