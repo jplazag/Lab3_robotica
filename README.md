@@ -507,8 +507,6 @@ Otra observación respecto a la solución de este punto, está enfocada en la ca
 
 NOTA: Se debe aclarar que para el desarrollo de este punto se realizó un ligero cambio en la secuencia de la aplicación pick and place, el manipulador tomará la pieza 2 ubicada al lado derecho y la insertará en la pieza 1 ubicada al frente del robot, luego recogerá otra pieza 2 al lado izquierdo y de nuevo la insertará en la pieza 1 que se encuentra al frente. Este cambio se realizó debido a que las mordazas del manipulador no cierran en su totalidad, por lo que este no es capaz de agarrar la pieza 1 y trasladarla como se sugirió en el laboratorio. 
 
-[**PARA VER EL FUNCIONAMIENTO DE LA APLICACIÓN PICK AND PLACE HAGA CLICK AQUÍ :)**](https://youtu.be/nAaMzAQ5Slk)
-
 ***Aplicación de movimiento en el espacio de la tarea:***
 
 Para esta aplicación en especial, fue necesario modificar los valores de los torques en los motores, esto debido a que en la posición que se escogió de home el brazó está extendido, entonces al desplazarse en alguno de los ejes este se extendía aún más, necesitando así más torque para responder a movimientos que le exigieran mover además su propio peso.
@@ -517,7 +515,7 @@ Para que los movimientos se hicieran con respecto a la base era necesario premul
 
 Dado que el movimiento en esta aplicación no necesitaba ser delicado, se calculan con la función ctraj únicamente dos poses intermedias, esto hace que junto con el aumento de torque el movimiento sea en general bastante brusco y poco fluido.
 
-[**PARA VER EL FUNCIONAMIENTO DE LA APLICACIÓN DE MOVIMIENTO EN EL ESPACIO DE TAREA HAGA CLICK AQUÍ :)**](https://youtu.be/nAaMzAQ5Slk)
+[**NOTA: PARA VER EL FUNCIONAMIENTO DE AMBAS APLICACIONES HAGA CLICK AQUÍ :)**](https://youtu.be/3YsL70Pfp8Q)
 ## Conclusiones:
 
 - Al desarrollar la aplicación pick and place, notamos una situación singular. La estrategia de desenergizar, posicionar y volver a energizar, nos mostró las consecuencias de seleccionar un punto en el espacio fuera del espacio de trabajo del manipulador. Al posicionar en estas poses inalcanzables y volver a energizar, el robot tenía comportamientos extraños, se movía hacía lugares que no se le habían inidicado. Fue esta otra razón para no calcular las MTH de la herramienta con esta estrategia.
