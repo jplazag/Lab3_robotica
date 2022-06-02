@@ -13,6 +13,13 @@ Phantom X e impleméntelo en MATLAB. Se recomienda usar el toolbox para verifica
 
 **RESPUESTA:**
 
+Para mayor claridad del espacio de trabajo del robot Phantom X, este se presenta en dos planos, el XZ y el XY, es decir, una vista lateral y una superior respectivamente. 
+A continuación se muestra a izquierda el espacio de trabajo en el plano XZ y a derecha se presenta en el plano XY, los cuales consideran las limitaciones articulares que presenta cada junta del robot, las cuales alcanzan valores de -150° a 150°.
+
+<img src="https://i.postimg.cc/g2qHQbLr/Workspace1.png" alt="drawing" width="500"/> <img src="https://i.postimg.cc/TPdJXNn0/Workspace2.png" alt="drawing" width="500"/>
+
+
+
 - Consulte los métodos disponibles en el toolbox para determinar la cinemática inversa de un manipulador.
 
 **RESPUESTA:**
