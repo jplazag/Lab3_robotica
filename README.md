@@ -350,8 +350,95 @@ case 'w'
                 move = move - 1;
             end
 ```
-Si la tecla oprimida es A y si la variable move_with_T es verdadera se asignarán el punto inicial de movimiento como la posición home definida anteriormente y la posición final como el desplazamiento d en el eje seleccionado y en el sentido seleccionado. AQUI VOY
+Si la tecla oprimida es A y si la variable move_with_T es verdadera se asignarán el punto inicial de movimiento como la posición home definida anteriormente y la posición final como el desplazamiento d en el eje seleccionado y en el sentido seleccionado, en este caso será hacía el sentido negativo del eje. Como la variable move_with_T es verdadera el movimiento se hará respecto de la herramienta, pero si por el contrario la variable move_with_T fuese false, el movimiento se haría respecto a la base:
 
+```
+ case 'a'
+            if move_with_T
+                switch mod(move,4)
+                    case 0            
+                        T1 = T0*transl(-d,0,0);
+                    case 1
+                        T1 = T0*transl(0,-d,0);
+                    case 2
+                        T1 = T0*transl(0,0,-d);
+                    case 3
+                        T1 = T0*troty(-pi/8);                    
+                end
+            else
+                switch mod(move,4)
+                    case 0            
+                        T1 = transl(-d,0,0)*T0;
+                    case 1
+                        T1 = transl(0,-d,0)*T0;
+                    case 2
+                        T1 = transl(0,0,-d)*T0;
+                    case 3
+                        T1 = T0*troty(-pi/8);                    
+                end
+            end
+            should_move = true;
+```
+Si en cambio, la letra seleccionada es D el movimiento se hará en el eje seleccionado pero en el sentido positivo del eje. De igual manera, se tiene la condición de la variable move_with_T, que permitirá determinar si el movimiento se hace respecto a la base o conn respecto a ala herramienta:
+
+```
+case 'd'
+            if move_with_T
+                switch mod(move,4)
+                    case 0            
+                        T1 = T0*transl(d,0,0);
+                    case 1
+                        T1 = T0*transl(0,d,0);
+                    case 2
+                        T1 = T0*transl(0,0,d);
+                    case 3
+                        T1 = T0*troty(pi/8);
+                end
+            else
+                switch mod(move,4)
+                    case 0            
+                        T1 = transl(d,0,0)*T0;
+                    case 1
+                        T1 = transl(0,d,0)*T0;
+                    case 2
+                        T1 = transl(0,0,d)*T0;
+                    case 3
+                        T1 = T0*troty(pi/8);
+                end
+            end
+            should_move = true;
+```
+Para los dos casos mencionados anteriormente, en el código se considera la posibilidad de que el punto deseado esté fuera del espacio diestro del manipulador, por lo cual, se crea el siguiente código que evalúa si la diferencia entre el vector desplazamiento del punto final y la longitud del eslabón 1 es mayor a la suma de todas las longitudes de los eslabones del manipulador, entonces mostrará en consola un mesaje de error avisando que la pose deseada no se encuentra en el espacio diestro:
+
+```
+ if abs(T1(1:3,4)-[0 0 l(1)])> sum(l(2:4))
+                should_move = false;
+                T1 = T0;
+                disp("Out of the workspace");
+                pause(1);
+            end
+```
+
+Finalmente, con la función ctraj se calcula las matrices de las poses intermedias, con esto se llama la función InverseKinematics que como se mencionó anteriormente, calcula la cinemática inversa y con ello se grafica cada una de estas poses en MATLAB:
+
+```
+
+    if should_move
+        % ctraj
+        T01 = ctraj(T0,T1,n);
+        % ciclo para calcular y graficar el robot
+        
+        for i=1:n
+           thetas = InverseKinematics(Robot,l,T01(:,:,i));
+           Robot.plot(thetas(2,:),'notiles','noname')
+           hold on;
+           trplot(eye(4),'rgb','arrow','length',25,'frame','or')
+           hold on
+           plot3(T01(1,4,i),T01(2,4,i),T01(3,4,i),'ro')
+           hold on;
+           movePX(msg,cliente,thetas,false)
+        end
+```
 ## Análisis:
 
 solución codo arriba
