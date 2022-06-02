@@ -156,7 +156,7 @@ Es posible lograr 2 soluciones al desarrollar la cinemática inversa, estas ser�
 
 **RESPUESTA:**
 
-Son el conjunto de puntos a los cuales el manipulador es capaz de llegar o alcanzar con al menos una orientación arbitraría, este espacio difiere del espacio de trabajo, el cual define al conjunto de puntos que alcanza el manupulador.
+Son el conjunto de puntos a los cuales el manipulador es capaz de llegar o alcanzar con al menos dos orientaciones arbitrarías, este espacio difiere del espacio de trabajo, el cual define al conjunto de puntos que alcanza el manupulador con al menos una orientación.
 
 ## ROS - Aplicación de Pick and place:
 
