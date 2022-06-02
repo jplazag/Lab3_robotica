@@ -17,6 +17,36 @@ Phantom X e impleméntelo en MATLAB. Se recomienda usar el toolbox para verifica
 
 **RESPUESTA:**
 
+Haciendo la respectiva consulta, se encontraron al menos 7 métodos que permiten hallar la cinemática inversa de un manipulador.
+
+- **ikine6s** 
+
+Cinemática inversa para robot de 6 ejes esféricos de muñeca revolucionados.
+
+- **ikine** 
+
+Cinemática inversa mediante método numérico iterativo.
+
+- **ikunc** 
+
+Cinemática inversa mediante optimización.
+
+- **ikcon** 
+
+Cinemática inversa mediante optimización con límites articulares.
+
+- **ikine_sym** 
+
+Cinemática inversa analítica obtenida simbólicamente.
+
+- **ikinem** 
+
+Cinemática inversa numérica por minimización.
+
+- **ikine3** 
+
+Cinemática inversa para robot de 3 ejes sin muñeca.
+
 ## Análisis:
 
 - Sabiendo que el robot Phantom X posee 4 GDL, de los cuales 3 corresponden a posición, el GDL restante
