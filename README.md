@@ -19,25 +19,25 @@ Phantom X e impleméntelo en MATLAB. Se recomienda usar el toolbox para verifica
 
 Haciendo la respectiva consulta, se encontraron al menos 7 métodos que permiten hallar la cinemática inversa de un manipulador.
 
-**ikine6s** 
+- **ikine6s**:
 Cinemática inversa para robot de 6 ejes esféricos de muñeca revolucionados.
 
-**ikine** 
+- **ikine**:
 Cinemática inversa mediante método numérico iterativo.
 
-**ikunc** 
+- **ikunc**:
 Cinemática inversa mediante optimización.
 
-**ikcon** 
+- **ikcon**:
 Cinemática inversa mediante optimización con límites articulares.
 
-**ikine_sym** 
+- **ikine_sym**:
 Cinemática inversa analítica obtenida simbólicamente.
 
-**ikinem** 
+- **ikinem**:
 Cinemática inversa numérica por minimización.
 
-**ikine3** 
+- **ikine3**:
 Cinemática inversa para robot de 3 ejes sin muñeca.
 
 ## Análisis:
