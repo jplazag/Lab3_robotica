@@ -9,43 +9,76 @@ Phantom X e impleméntelo en MATLAB. Se recomienda usar el toolbox para verifica
 
 **RESPUESTA:**
 
+Para el desarrollo de la cinemática inversa, se creó la función InverseKinematics.m que calcula los ángulos articulares, ingresando a la función las longitudes de los eslabones y la matriz de la TCP en la pose deseada.
+
+ACABAR
+```
+function thetas = InverseKinematics(Robot,l,Pose)
+ 
+    HT0 = Pose; %Robot.fkine(q);
+    
+    d_T = HT0(1:3,4);
+    approach = HT0(1:3,3);
+    W = d_T - l(4)*approach;
+    
+    x_p = HT0(1,4);
+    y_p = HT0(2,4);
+    
+    th1 = atan2(y_p,x_p);
+
+    if abs(th1)>pi/2
+        th1_m = atan2(-y_p,-x_p);
+    else
+        th1_m = th1;
+    end
+    x_trian = sqrt( W(1)^2 + W(2)^2);
+    y_trian = W(3) - l(1);
+    
+    cos_th3 = (x_trian^2 + y_trian^2 - l(2)^2 - l(3)^2)/(2*l(2)*l(3));
+    
+    sin_th3 = sqrt(1-cos_th3^2); %Codo arriba (Es contrario a lo visto en clase porque acá el movto positivo es en el sentido del reloj)
+    
+    th3_up = atan2(real(sin_th3),cos_th3);
+    
+    th3_do = -th3_up; %Codo abajo
+    
+    alpha = atan2(-y_trian,x_trian); %Acá y se toma negativa puesto que el mvto de las juntas es contrario al sentido de la convención 
+    beta= atan2(-l(3)*sin(abs(th3_do)),l(2)+l(3)*cos(abs(th3_do)));
+    
+
+    th2_do = alpha - beta; %Codo abajo
+    th2_do = (pi/2+th2_do);
+    
+    th2_up = alpha + beta; %Codo arriba
+    th2_up = (pi/2+th2_up);
+    
+    
+    H30_do = Robot.A([1 2 3],[th1_m th2_do th3_do]);
+    
+    HT3_do = H30_do^(-1)*HT0;
+    
+    th4_do = atan2(-HT3_do(1,1),HT3_do(2,1));
+
+
+    H30_up = Robot.A([1 2 3],[th1_m th2_up th3_up]);
+
+    HT3_up = H30_up^(-1)*HT0;
+    
+    th4_up = atan2(-HT3_up(1,1),HT3_up(2,1));
+    
+    thetas = [th1 th2_do th3_do th4_do; ...
+              th1 th2_up th3_up th4_up];   
+
+end
+```
+
 - Esboce el espacio de trabajo del robot Phantom X.
 
 **RESPUESTA:**
 
-Para mayor claridad del espacio de trabajo del robot Phantom X, este se presenta en dos planos, el XZ y el XY, es decir, una vista lateral y una superior respectivamente. 
-A continuación se muestra a izquierda el espacio de trabajo en el plano XZ y a derecha se presenta en el plano XY, los cuales consideran las limitaciones articulares que presenta cada junta del robot, las cuales alcanzan valores de -150° a 150°.
-
-<img src="https://i.postimg.cc/g2qHQbLr/Workspace1.png" alt="drawing" width="500"/> <img src="https://i.postimg.cc/TPdJXNn0/Workspace2.png" alt="drawing" width="500"/>
-
-
-
 - Consulte los métodos disponibles en el toolbox para determinar la cinemática inversa de un manipulador.
 
 **RESPUESTA:**
-
-Haciendo la respectiva consulta, se encontraron al menos 7 métodos que permiten hallar la cinemática inversa de un manipulador.
-
-- **ikine6s**:
-Cinemática inversa para robot de 6 ejes esféricos de muñeca revolucionados.
-
-- **ikine**:
-Cinemática inversa mediante método numérico iterativo.
-
-- **ikunc**:
-Cinemática inversa mediante optimización.
-
-- **ikcon**:
-Cinemática inversa mediante optimización con límites articulares.
-
-- **ikine_sym**:
-Cinemática inversa analítica obtenida simbólicamente.
-
-- **ikinem**:
-Cinemática inversa numérica por minimización.
-
-- **ikine3**:
-Cinemática inversa para robot de 3 ejes sin muñeca.
 
 ## Análisis:
 
@@ -203,67 +236,7 @@ function movePX(msg,cliente,thetas,mov_gripper)
 
 end
 ```
-- Finalmente, en la función InverseKinematics.m se calculan los ángulos articulares mediante cinemática inversa, ingresando a la función las longitudes de los eslabones y la matriz de la TCP en la pose deseada. En este script se plantean las ecuaciones descritas en el primer item de este laboratorio, en donde se resulven para las dos poses posibles (codo arriba y codo abajo), estos ángulos articulares de las dos poses posibles son la salida de esta funciòn:
 
-```
-function thetas = InverseKinematics(Robot,l,Pose)
- 
-    HT0 = Pose; %Robot.fkine(q);
-    
-    d_T = HT0(1:3,4);
-    approach = HT0(1:3,3);
-    W = d_T - l(4)*approach;
-    
-    x_p = HT0(1,4);
-    y_p = HT0(2,4);
-    
-    th1 = atan2(y_p,x_p);
-
-    if abs(th1)>pi/2
-        th1_m = atan2(-y_p,-x_p);
-    else
-        th1_m = th1;
-    end
-    x_trian = sqrt( W(1)^2 + W(2)^2);
-    y_trian = W(3) - l(1);
-    
-    cos_th3 = (x_trian^2 + y_trian^2 - l(2)^2 - l(3)^2)/(2*l(2)*l(3));
-    
-    sin_th3 = sqrt(1-cos_th3^2); %Codo arriba (Es contrario a lo visto en clase porque acá el movto positivo es en el sentido del reloj)
-    
-    th3_up = atan2(real(sin_th3),cos_th3);
-    
-    th3_do = -th3_up; %Codo abajo
-    
-    alpha = atan2(-y_trian,x_trian); %Acá y se toma negativa puesto que el mvto de las juntas es contrario al sentido de la convención 
-    beta= atan2(-l(3)*sin(abs(th3_do)),l(2)+l(3)*cos(abs(th3_do)));
-    
-
-    th2_do = alpha - beta; %Codo abajo
-    th2_do = (pi/2+th2_do);
-    
-    th2_up = alpha + beta; %Codo arriba
-    th2_up = (pi/2+th2_up);
-    
-    
-    H30_do = Robot.A([1 2 3],[th1_m th2_do th3_do]);
-    
-    HT3_do = H30_do^(-1)*HT0;
-    
-    th4_do = atan2(-HT3_do(1,1),HT3_do(2,1));
-
-
-    H30_up = Robot.A([1 2 3],[th1_m th2_up th3_up]);
-
-    HT3_up = H30_up^(-1)*HT0;
-    
-    th4_up = atan2(-HT3_up(1,1),HT3_up(2,1));
-    
-    thetas = [th1 th2_do th3_do th4_do; ...
-              th1 th2_up th3_up th4_up];   
-
-end
-```
 ## ROS - Aplicación de movimiento en el espacio de la tarea:
 
 - De manera similar al trabajo realizado en el laboratorio de cinemática directa, cree un script (en Matlab o
@@ -496,5 +469,11 @@ torques
 premultiplicacion
 ## Conclusiones:
 
-solución codo arriba 
+- Al desarrollar la aplicación pick and place, notamos una situación singular. La estrategia de desenergizar, posicionar y volver a energizar, nos mostró las consecuencias de seleccionar un punto en el espacio fuera del espacio de trabajo del manipulador. Al posicionar en estas poses inalcanzables y volver a energizar, el robot tenía comportamientos extraños, se movía hacía lugares que no se le habían inidicado. Fue esta otra razón para no calcular las MTH de la herramienta con esta estrategia.
+
+- Se seleccionó la solución codo arriba, esto debido a que los torques que se requerian en la solución codo abajo eran mayores, si se aumentaba el torque era capaz de responder a estas exigencias pero los movimientos se volvían más bruscos y menos exactos. 
+
+- En el transcurso del desarrollo de esta práctica, nos dimos cuenta que era mandatorio que el manipulador fuera a una posición home apenas se iniciara a correr el código, de no hacerlo los cálculos hechos no correspondian a los movimientos que hacía el robot.
+
+- 
 ## Referencias:
