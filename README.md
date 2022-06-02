@@ -441,9 +441,24 @@ Finalmente, con la función ctraj se calcula las matrices de las poses intermedi
 ```
 ## Análisis:
 
+***Aplicación de Pick and place:***
+Para la solución de este punto se utilizaron varias formas para calcular las matrices de las poses finales, es decir, la pose que iba a tener el manipulador cuando estuviese en el lugar correcto de recoger y dejar cada una de las piezas. 
+
+La primera medida que se tomó y se utilizó a lo largo del desarrollo del punto fue crear una plantilla (ver imagen a continuación) que estandarizara los lugares en los que iban a estar las piezas, con esto se lograría reducir el error al ubicarlar en lugares arbitrarios y diferentes cada vez que se manipulaba el robot.
+
+<img src="https://i.postimg.cc/vm1r954x/longitudes-robot.png" alt="drawing" width="400"/>
+
+Luego de esto, se utilizó la estrategía de desenergizar el manipulador, ubicarlo en la pose deseada, energizarlo de nuevo y finalmente leer los valores que tenia cada articulación. Luego de varios intentos, se decidió abandonar esta idea ya que al energizar el robot había un desfase considerable respecto a la ubicación dada cuando se desenergizó. Por lo tanto, el error se volvía inaceptable.
+
+La segunda estrategía que se utilizó fue utilizar la solución que se había planteado en la aplicación de movimiento en el espacio de la tarea, es decir, a partir de oprimir las teclas se llevaba al manipulador a la pose deseada y luego se leía esta posición de las articulaciones. Se abandonó esta idea al requerirse pasos muy pequeños para llegar a esta posición deseada, por lo tanto se volvía engorroso hacerlo oprimiendo repetidamente las teclas necesarias.
+
+Por último, la estrategia con la que se desarrolló este punto fue 
+
 solución codo arriba
 Siguiento la plantilla creada (Ver imagen a continuación), se establecieron las poses iniciales y finales que queríamos que el manipulador alcanzara 
 numero de poses, delay
+
+***Aplicación de movimiento en el espacio de la tarea:***
 
 torques
 premultiplicacion
