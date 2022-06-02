@@ -13,13 +13,6 @@ Phantom X e impleméntelo en MATLAB. Se recomienda usar el toolbox para verifica
 
 **RESPUESTA:**
 
-Para mayor claridad del espacio de trabajo del robot Phantom X, este se presenta en dos planos, el XZ y el XY, es decir, una vista lateral y una superior respectivamente. 
-A continuación se muestra a izquierda el espacio de trabajo en el plano XZ y a derecha se presenta en el plano XY.
-
-<img src="https://i.postimg.cc/g2qHQbLr/Workspace1.png" alt="drawing" width="500"/> <img src="https://i.postimg.cc/TPdJXNn0/Workspace2.png" alt="drawing" width="500"/>
-
-Estos dibujos consideran las limitaciones articulares que presenta cada junta del robot, las cuales alcanzan valores de -150° a 150°.
-
 - Consulte los métodos disponibles en el toolbox para determinar la cinemática inversa de un manipulador.
 
 **RESPUESTA:**
@@ -449,26 +442,29 @@ Finalmente, con la función ctraj se calcula las matrices de las poses intermedi
 ## Análisis:
 
 ***Aplicación de Pick and place:***
+
 Para la solución de este punto se utilizaron varias formas para calcular las matrices de las poses finales, es decir, la pose que iba a tener el manipulador cuando estuviese en el lugar correcto de recoger y dejar cada una de las piezas. 
 
-La primera medida que se tomó y se utilizó a lo largo del desarrollo del punto fue crear una plantilla (ver imagen a continuación) que estandarizara los lugares en los que iban a estar las piezas, con esto se lograría reducir el error al ubicarlar en lugares arbitrarios y diferentes cada vez que se manipulaba el robot.
+La primera estrategía que se tomó y se utilizó a lo largo del desarrollo del punto fue crear una plantilla (ver imagen a continuación) que estandarizara los lugares en los que iban a estar las piezas, con esto se lograría reducir el error al ubicarlar en lugares arbitrarios y diferentes cada vez que se manipulaba el robot.
 
-<img src="https://i.postimg.cc/vm1r954x/longitudes-robot.png" alt="drawing" width="400"/>
+<img src="https://i.postimg.cc/g2D2mxZd/Whats-App-Image-2022-06-01-at-9-35-46-PM.jpg" alt="drawing" width="400"/>
 
 Luego de esto, se utilizó la estrategía de desenergizar el manipulador, ubicarlo en la pose deseada, energizarlo de nuevo y finalmente leer los valores que tenia cada articulación. Luego de varios intentos, se decidió abandonar esta idea ya que al energizar el robot había un desfase considerable respecto a la ubicación dada cuando se desenergizó. Por lo tanto, el error se volvía inaceptable.
 
 La segunda estrategía que se utilizó fue utilizar la solución que se había planteado en la aplicación de movimiento en el espacio de la tarea, es decir, a partir de oprimir las teclas se llevaba al manipulador a la pose deseada y luego se leía esta posición de las articulaciones. Se abandonó esta idea al requerirse pasos muy pequeños para llegar a esta posición deseada, por lo tanto se volvía engorroso hacerlo oprimiendo repetidamente las teclas necesarias.
 
-Por último, la estrategia con la que se desarrolló este punto fue 
+Por último, la estrategia con la que se desarrolló este punto fue definir los puntos deseados en la plantilla. Dibujar el origen 0 en la misma plantilla y a partir de allí definir las distancia x y y, luego de manera manual calcular las matrices de transformación homogenea. Esta resulto ser la estrategía más confiable y con menor error que se utilizó.
 
-solución codo arriba
-Siguiento la plantilla creada (Ver imagen a continuación), se establecieron las poses iniciales y finales que queríamos que el manipulador alcanzara 
-numero de poses, delay
+Otra observación respecto a la solución de este punto, está enfocada en la cantidad de poses intermedias entre la posición inicial y final. Inicialmente, se puso un delay al finalizar el movimiento a cada una de las poses, esto se hizo con la intención de disminuir el movimiento brusco que presenta el manipulador, pero conforme avanzavamos en el desarrollo nos dimos cuenta que este delay no era suficiente para amortiguar este movimiento. Así que, se reemplazó este delay por un número mayor de poses intermedias entre la posicón inicial y final, así se logró atenuar el movimiento. Cuando se debía insertar la pieza 2 en la 1, el paso se disminuyó considerablemente haciendo que el movimiento fuera más lento pero a su vez más delicado.
+
+NOTA: Se debe aclarar que para el desarrollo de este punto se realizó un ligero cambio en la secuencia de la aplicación pick and place, el manipulador tomará la pieza 2 ubicada al lado derecho y la insertará en la pieza 1 ubicada al frente del robot, luego recogerá otra pieza 2 al lado izquierdo y de nuevo la insertará en la pieza 1 que se encuentra al frente. Este cambio se realizó debido a que las mordazas del manipulador no cierran en su totalidad, por lo que este no es capaz de agarrar la pieza 1 y trasladarla como se sugirió en el laboratorio. 
 
 ***Aplicación de movimiento en el espacio de la tarea:***
+
 
 torques
 premultiplicacion
 ## Conclusiones:
 
+solución codo arriba 
 ## Referencias:
