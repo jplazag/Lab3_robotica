@@ -11,12 +11,13 @@ Phantom X e impleméntelo en MATLAB. Se recomienda usar el toolbox para verifica
 
 Para el desarrollo de la cinemática inversa, se creó la función InverseKinematics.m que calcula los ángulos articulares, ingresando a la función las longitudes de los eslabones y la matriz de la TCP en la pose deseada.
 
-ACABAR
 ```
 function thetas = InverseKinematics(Robot,l,Pose)
  
     HT0 = Pose; %Robot.fkine(q);
-    
+```
+Se define entonces las variables x_p y y_p que son las distancias en los respectivos ejes del TCP, al calcular la arcotangente de estos dos valores es posible determinar q1, teniendo en cuenta el cuadrante en el que se encuentran para asignar el signo correspondiente:
+```    
     d_T = HT0(1:3,4);
     approach = HT0(1:3,3);
     W = d_T - l(4)*approach;
@@ -31,6 +32,10 @@ function thetas = InverseKinematics(Robot,l,Pose)
     else
         th1_m = th1;
     end
+    
+    ```   
+Con los eslabones L2 y L3 se forma un primer triangulo, que al aplicar el teorema de los cosenos es posible despejar q3 y al aplicar una identidad es posible determinar los valores de esta articulación para las soluciones codo arriba y codo abajo:
+    ```   
     x_trian = sqrt( W(1)^2 + W(2)^2);
     y_trian = W(3) - l(1);
     
@@ -42,6 +47,10 @@ function thetas = InverseKinematics(Robot,l,Pose)
     
     th3_do = -th3_up; %Codo abajo
     
+    ```   
+  A partir del cálculo de q3, se pueden determinar los ángulos alpha y beta que al restarlos da q2 con codo abajo, al sumarlos da un q2 con codo arriba:
+    ```   
+    
     alpha = atan2(-y_trian,x_trian); %Acá y se toma negativa puesto que el mvto de las juntas es contrario al sentido de la convención 
     beta= atan2(-l(3)*sin(abs(th3_do)),l(2)+l(3)*cos(abs(th3_do)));
     
@@ -52,6 +61,9 @@ function thetas = InverseKinematics(Robot,l,Pose)
     th2_up = alpha + beta; %Codo arriba
     th2_up = (pi/2+th2_up);
     
+```     
+Finalmente, al hacer la operación de multiplicar la inversa de la matriz de rotación de 3 con respecto a 0, con la matriz de rotación de la herramienta con respecto a la base, se obtendrá la matriz de la herramienta respecto al marco 3, esta matriz es posible extraer q4 al calcular la arcotangente de -HT3_up(1,1)/HT3_up(2,1):
+``` 
     
     H30_do = Robot.A([1 2 3],[th1_m th2_do th3_do]);
     
@@ -413,17 +425,6 @@ case 'd'
             end
             should_move = true;
 ```
-Para los dos casos mencionados anteriormente, en el código se considera la posibilidad de que el punto deseado esté fuera del espacio diestro del manipulador, por lo cual, se crea el siguiente código que evalúa si la diferencia entre el vector desplazamiento del punto final y la longitud del eslabón 1 es mayor a la suma de todas las longitudes de los eslabones del manipulador, entonces mostrará en consola un mesaje de error avisando que la pose deseada no se encuentra en el espacio diestro:
-
-```
- if abs(T1(1:3,4)-[0 0 l(1)])> sum(l(2:4))
-                should_move = false;
-                T1 = T0;
-                disp("Out of the workspace");
-                pause(1);
-            end
-```
-
 Finalmente, con la función ctraj se calcula las matrices de las poses intermedias, con esto se llama la función InverseKinematics que como se mencionó anteriormente, calcula la cinemática inversa y con ello se grafica cada una de estas poses en MATLAB:
 
 ```
@@ -468,9 +469,11 @@ NOTA: Se debe aclarar que para el desarrollo de este punto se realizó un ligero
 
 ***Aplicación de movimiento en el espacio de la tarea:***
 
+Para esta aplicación en especial, fue necesario modificar los valores de los torques en los motores, esto debido a que en la posición que se escogió de home el brazó está extendido, entonces al desplazarse en alguno de los ejes este se extendía aún más, necesitando así más torque para responder a movimientos que le exigieran mover además su propio peso.
 
-torques
-premultiplicacion
+Para que los movimientos se hicieran con respecto a la base era necesario premultiplicar el desplazamiento, así los ángulos variarían respecto a los ejes originales x y z (ángulos fijos). En cambio, si se postmultiplica el desplazamiento el movimiento se hará respecto a la herramienta, es decir con ángulos Euler.
+
+Dado que el movimiento en esta aplicación no necesitaba ser delicado, se calculan con la función ctraj únicamente dos poses intermedias, esto hace que junto con el aumento de torque el movimiento sea en general bastante brusco y poco fluido.
 
 [**PARA VER EL FUNCIONAMIENTO DE LA APLICACIÓN DE MOVIMIENTO EN EL ESPACIO DE TAREA HAGA CLICK AQUÍ :)**](https://youtu.be/nAaMzAQ5Slk)
 ## Conclusiones:
